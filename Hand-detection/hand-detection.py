@@ -24,7 +24,7 @@ def detect_faces(image):
     #grayscale converted
     face_coordinates = trained_face_data.detectMultiScale(
         gray_img,
-        scaleFactor=1.2,
+        scaleFactor=1.3,
         minNeighbors=8,
         minSize=(30,30)
     )
