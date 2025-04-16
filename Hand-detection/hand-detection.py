@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-image_path = "images\\Wednesday-2.jpg"
+image_path = "/home/pouya/workspace/ComputerVision/Computer-Vision-Projects/images/Wednesday-2.jpg"
 # https://stackoverflow.com/questions/32302180/typeerror-image-data-can-not-convert-to-float
 
 rds_img_object = rds_img(image_path)
@@ -12,13 +12,22 @@ def detect_faces(image):
     #converted to grayscale 
     gray_img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # flipped_gray_image = cv2.flip(gray_img, 1)
+    gray_img = cv2.equalizeHist(gray_img)
+
 
     #Training Face Data using Cascade Classifier 
     trained_face_data = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
-    # trained_face_data = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_righteye_2splits.xml')
+    #trained_face_data = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_righteye_2splits.xml')
+    #trained_face_data = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_profileface.xml')
 
+    
     #grayscale converted
-    face_coordinates = trained_face_data.detectMultiScale(gray_img)
+    face_coordinates = trained_face_data.detectMultiScale(
+        gray_img,
+        scaleFactor=1.2,
+        minNeighbors=8,
+        minSize=(30,30)
+    )
 
 
     print(face_coordinates)
